@@ -212,11 +212,10 @@ if st.session_state.Mode != st.session_state.PreviousMode:
     st.session_state.PreviousMode = st.session_state.Mode
 # Plot title
 st.title('Presence log')
-
+ShowDate()
 people, vehicles, overview = st.tabs(['People', 'Vehicles', 'Overview'])
 with people:
     if st.session_state.Mode == StreamlitMode.NameInputStandard:
-        ShowDate()
         ShowCompany()
         if st.session_state.selectedCompany == 'Add New':
             st.session_state.Mode = StreamlitMode.NameInputNewCompany
@@ -225,7 +224,6 @@ with people:
         ShowNewPersonell()
         ShowSubmitButton()
     elif st.session_state.Mode == StreamlitMode.NameInputNewCompany:
-        ShowDate()
         ShowCompany()
         if st.session_state.selectedCompany != 'Add New':
             st.session_state.Mode = StreamlitMode.NameInputStandard

@@ -19,11 +19,7 @@ class StreamlitMode:
 
 def ShowDate() -> None:
     st.session_state.setdefault('selectedDate', date.today())
-    left, right = st.columns([2, 1], vertical_alignment='bottom')
-    with left:
-        st.date_input('Date', label_visibility='visible', format='DD/MM/YYYY', key='selectedDate')
-    with right:
-        st.button('Show all for this date', use_container_width=True, on_click=lambda: setattr(st.session_state, 'Mode', StreamlitMode.FullList))
+    st.date_input('Date', label_visibility='visible', format='DD/MM/YYYY', key='selectedDate')
 
 def ShowCompany() -> None:
     sql = (
@@ -182,7 +178,6 @@ def ShowAll() -> None:
     params = {'selected_date': st.session_state.selectedDate.isoformat()}
 
     people = db.query(sql, params)
-    st.button('Back', on_click=lambda: setattr(st.session_state,'Mode', StreamlitMode.NameInputStandard))
     st.dataframe(people, hide_index=True)
 
 def ShowSubmitButton() -> None:
@@ -236,8 +231,6 @@ with people:
             st.session_state.Mode = StreamlitMode.NameInputStandard
             st.rerun()
         ShowNewCompany()
-    elif st.session_state.Mode == StreamlitMode.FullList:
-        ShowAll()
 with vehicles:
     pass
 with overview:

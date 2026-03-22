@@ -218,21 +218,27 @@ if st.session_state.Mode != st.session_state.PreviousMode:
 # Plot title
 st.title('Presence log')
 
-if st.session_state.Mode == StreamlitMode.NameInputStandard:
-    ShowDate()
-    ShowCompany()
-    if st.session_state.selectedCompany == 'Add New':
-        st.session_state.Mode = StreamlitMode.NameInputNewCompany
-        st.rerun()
-    ShowExistingPersonell()
-    ShowNewPersonell()
-    ShowSubmitButton()
-elif st.session_state.Mode == StreamlitMode.NameInputNewCompany:
-    ShowDate()
-    ShowCompany()
-    if st.session_state.selectedCompany != 'Add New':
-        st.session_state.Mode = StreamlitMode.NameInputStandard
-        st.rerun()
-    ShowNewCompany()
-elif st.session_state.Mode == StreamlitMode.FullList:
-    ShowAll()
+people, vehicles, overview = st.tabs(['People', 'Vehicles', 'Overview'])
+with people:
+    if st.session_state.Mode == StreamlitMode.NameInputStandard:
+        ShowDate()
+        ShowCompany()
+        if st.session_state.selectedCompany == 'Add New':
+            st.session_state.Mode = StreamlitMode.NameInputNewCompany
+            st.rerun()
+        ShowExistingPersonell()
+        ShowNewPersonell()
+        ShowSubmitButton()
+    elif st.session_state.Mode == StreamlitMode.NameInputNewCompany:
+        ShowDate()
+        ShowCompany()
+        if st.session_state.selectedCompany != 'Add New':
+            st.session_state.Mode = StreamlitMode.NameInputStandard
+            st.rerun()
+        ShowNewCompany()
+    elif st.session_state.Mode == StreamlitMode.FullList:
+        ShowAll()
+with vehicles:
+    pass
+with overview:
+    pass

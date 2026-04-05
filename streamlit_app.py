@@ -389,6 +389,10 @@ def ShowVehicles() -> None:
             st.session_state.Mode |= StreamlitMode.VehicleCompaniesNew
             st.rerun()
     elif StreamlitMode.VehicleCompaniesNew in st.session_state.Mode:
+        if st.session_state.vehicleCompany != 'Add New...':
+            st.session_state.Mode &= ~StreamlitMode.VehicleCompaniesNew
+            st.session_state.Mode |= StreamlitMode.VehicleCompaniesExpanded
+            st.rerun()
         left, right = st.columns([1, 1], vertical_alignment='bottom')
         with left:
             st.selectbox('Company name', companies_all_names + ['Add New...'], label_visibility='visible', key = 'vehicleCompany')

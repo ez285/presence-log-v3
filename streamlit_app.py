@@ -8,16 +8,7 @@ from sqlalchemy import text, Row
 from database import Database
 from datetime import date
 import pandas as pd
-from enum import Flag, auto
-
-class StreamlitMode(Flag):
-    NameInputStandard = auto()
-    NameInputNewCompany = auto()
-    VehicleTypeStandard = auto()
-    VehicleTypeNew = auto()
-    VehicleCompaniesStandard = auto()
-    VehicleCompaniesExpanded = auto()
-    VehicleCompaniesNew = auto()
+from streamlitmodes import StreamlitMode
 
 @st.cache_resource
 def _get_database() -> Database:

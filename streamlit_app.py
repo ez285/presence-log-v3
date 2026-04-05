@@ -112,9 +112,9 @@ def _get_vehicle_types() -> pd.DataFrame:
     return vehicle_types
 
 def ShowDate() -> None:
-    st.date_input('Date', label_visibility='visible', format='DD/MM/YYYY', key='selectedDate')
     if st.session_state.Reruns == 1:
         st.session_state.selectedDate = date.today()
+    st.date_input('Date', label_visibility='visible', format='DD/MM/YYYY', key='selectedDate')
 
 def ShowCompany() -> None:
     companies = _get_companies()

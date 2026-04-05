@@ -359,13 +359,13 @@ def ShowVehicles() -> None:
         vehicle_types = _get_vehicle_types()['vehicle_type'].tolist()
     
     st.text_input('Registration No.', label_visibility='visible', key='vehicleRegistrationNo')
-    if StreamlitMode.VehicleTypeStandard & st.session_state.Mode:
+    if StreamlitMode.VehicleTypeStandard in st.session_state.Mode:
         st.selectbox('Type', vehicle_types + ['Add New...'], label_visibility='visible', key='vehicleTypeExisting')
         if st.session_state.vehicleTypeExisting == 'Add New...':
             st.session_state.Mode &= ~StreamlitMode.VehicleTypeStandard
             st.session_state.Mode |= StreamlitMode.VehicleTypeNew
             st.rerun()
-    elif StreamlitMode.VehicleTypeNew & st.session_state.Mode:
+    elif StreamlitMode.VehicleTypeNew in st.session_state.Mode:
         if st.session_state.vehicleTypeExisting != 'Add New...':
             st.session_state.Mode &= ~StreamlitMode.VehicleTypeNew
             st.session_state.Mode |= StreamlitMode.VehicleTypeStandard
@@ -376,19 +376,19 @@ def ShowVehicles() -> None:
         with right:
             st.text_input('Type', label_visibility='visible', key='vehicleTypeNew')
 
-    if StreamlitMode.VehicleCompaniesStandard & st.session_state.Mode:
+    if StreamlitMode.VehicleCompaniesStandard in st.session_state.Mode:
         st.selectbox('Company name', company_names + ['Expand...'], label_visibility='visible', key = 'vehicleCompany')
         if st.session_state.vehicleCompany == 'Expand...':
             st.session_state.Mode &= ~StreamlitMode.VehicleCompaniesStandard
             st.session_state.Mode |= StreamlitMode.VehicleCompaniesExpanded
             st.rerun()
-    elif StreamlitMode.VehicleCompaniesExpanded & st.session_state.Mode:
+    elif StreamlitMode.VehicleCompaniesExpanded in st.session_state.Mode:
         st.selectbox('Company name', companies_all_names + ['Add New...'], label_visibility='visible', key = 'vehicleCompany')
         if st.session_state.vehicleCompany == 'Add New...':
             st.session_state.Mode &= ~StreamlitMode.VehicleCompaniesExpanded
             st.session_state.Mode |= StreamlitMode.VehicleCompaniesNew
             st.rerun()
-    elif StreamlitMode.VehicleCompaniesNew & st.session_state.Mode:
+    elif StreamlitMode.VehicleCompaniesNew in st.session_state.Mode:
         left, right = st.columns([1, 1], vertical_alignment='bottom')
         with left:
             st.selectbox('Company name', companies_all_names + ['Add New...'], label_visibility='visible', key = 'vehicleCompany')
@@ -426,7 +426,7 @@ db = _get_database()
 SetUpStateVariables()
 st.session_state.Reruns += 1
 # Secondly, reset state variable, except for modes, if mode changes
-if not st.session_state.Mode & st.session_state.PreviousMode:
+if st.session_state.Mode not in st.session_state.PreviousMode:
     ResetStateVariables()
     st.session_state.PreviousMode = st.session_state.Mode
 # Plot title
@@ -434,7 +434,8 @@ st.title('Presence log')
 ShowDate()
 people, vehicles, overview = st.tabs(['People', 'Vehicles', 'Overview'])
 with people:
-    if StreamlitMode.NameInputStandard & st.session_state.Mode:
+    st.write(type(st.session_state.Mode), st.session_state.Mode)
+    if StreamlitMode.NameInputStandard in st.session_state.Mode:
         ShowCompany()
         if st.session_state.selectedCompany == 'Add New':
             st.session_state.Mode &= ~StreamlitMode.NameInputStandard
@@ -443,7 +444,7 @@ with people:
         ShowExistingpersonnel()
         ShowNewpersonnel()
         st.button('Submit', on_click=SubmitPeople, key='btnSubmitPeople')
-    elif StreamlitMode.NameInputNewCompany & st.session_state.Mode:
+    elif StreamlitMode.NameInputNewCompany in st.session_state.Mode:
         ShowCompany()
         if st.session_state.selectedCompany != 'Add New':
             st.session_state.Mode &= ~StreamlitMode.NameInputNewCompany

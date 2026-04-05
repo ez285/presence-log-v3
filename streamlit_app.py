@@ -138,7 +138,7 @@ def ShowNewpersonnel() -> None:
     with middle:
         st.text_input('Last Name', label_visibility='visible', key='lastName')
     with right:
-        st.button('Add', use_container_width=True, on_click=AddNewpersonnel)
+        st.button('Add', use_container_width=True, on_click=AddNewpersonnel, key='btnAddNewpersonnel')
     if len(st.session_state.newpersonnel) > 0:
         st.dataframe(st.session_state.newpersonnel, hide_index=True)
 
@@ -158,7 +158,7 @@ def AddNewCompany() -> None:
 
 def ShowNewCompany() -> None:
     st.text_input('Company', label_visibility='visible', key='newCompany')
-    st.button('Add', use_container_width=True, on_click=AddNewCompany)
+    st.button('Add', use_container_width=True, on_click=AddNewCompany, key='btnAddNewCompany')
 
 def SubmitPeople() -> None:
     # Add new person to the database and log their presence
@@ -397,7 +397,7 @@ def ShowVehicles() -> None:
                 st.session_state.Mode |= StreamlitMode.VehicleCompaniesExpanded
         with right:
             st.text_input('Company name', label_visibility='visible', key='vehicleCompanyNew')
-    st.button('Add', use_container_width=True, on_click=AddVehicle)
+    st.button('Add', use_container_width=True, on_click=AddVehicle, key='btnAddVehicle')
 
 def SetUpStateVariables() -> None:
     if 'Mode' not in st.session_state:
@@ -434,6 +434,7 @@ st.title('Presence log')
 ShowDate()
 people, vehicles, overview = st.tabs(['People', 'Vehicles', 'Overview'])
 with people:
+    st.write(type(st.session_state.Mode), st.session_state.Mode)
     if StreamlitMode.NameInputStandard & st.session_state.Mode:
         ShowCompany()
         if st.session_state.selectedCompany == 'Add New':
@@ -442,7 +443,7 @@ with people:
             st.rerun()
         ShowExistingpersonnel()
         ShowNewpersonnel()
-        st.button('Submit', on_click=SubmitPeople)
+        st.button('Submit', on_click=SubmitPeople, key='btnSubmitPeople')
     elif StreamlitMode.NameInputNewCompany & st.session_state.Mode:
         ShowCompany()
         if st.session_state.selectedCompany != 'Add New':

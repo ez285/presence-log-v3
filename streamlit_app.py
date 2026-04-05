@@ -434,7 +434,7 @@ st.title('Presence log')
 ShowDate()
 people, vehicles, overview = st.tabs(['People', 'Vehicles', 'Overview'])
 with people:
-    if StreamlitMode.NameInputStandard in st.session_state.Mode:
+    if StreamlitMode.NameInputStandard & st.session_state.Mode:
         ShowCompany()
         if st.session_state.selectedCompany == 'Add New':
             st.session_state.Mode &= ~StreamlitMode.NameInputStandard

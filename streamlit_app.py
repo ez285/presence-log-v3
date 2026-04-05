@@ -354,7 +354,7 @@ def AddVehicle() -> None:
     _get_vehicle_types.clear()
 
 def ShowVehicles() -> None:
-    if 'vehicleRegistrationNo' not in st.session_state or st.session_state.vehicleRegistrationNo != '':
+    if ('vehicleRegistrationNo' not in st.session_state) or st.session_state.vehicleRegistrationNo != '':
         vehicle_types, companies = _get_company_and_type_for_vehicle(st.session_state.vehicleRegistrationNo)
         vehicle_types = vehicle_types['vehicle_type'].tolist()
         company_names = (companies['company_id'] + '. ' + companies['company_name']).tolist()
